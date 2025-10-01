@@ -4,7 +4,15 @@ import (
 	"fmt"
 	ui "sandwich-shop/user_interface"
 	"strings"
+	"time"
 )
+
+type Order struct {
+	orderId      int
+	customerName string
+	totalPrice   float32
+	timeOfOrder  time.Time
+}
 
 func main() {
 	fmt.Println("\n\t\t======WELCOME TO THE SANDWICH SHOP!=====")
@@ -13,6 +21,7 @@ func main() {
 	mainMenuLogic()
 
 	fmt.Println("\n\t\t=====GOODBYE!======")
+	fmt.Println(strings.Repeat("_", 80))
 }
 
 func mainMenuLogic() {
@@ -30,4 +39,29 @@ func mainMenuLogic() {
 	}
 }
 
-func orderScreenLogic() {}
+func orderScreenLogic() {
+	ifContinue := true
+
+	for ifContinue {
+		userChoice := ui.DisplayOrderScreen()
+
+		switch userChoice {
+		case 1:
+			sandwichLogic()
+		case 2:
+			chipLogic()
+		case 3:
+			drinkLogic()
+		case 4:
+			checkoutLogic()
+		}
+	}
+}
+
+func sandwichLogic() {}
+
+func chipLogic() {}
+
+func drinkLogic() {}
+
+func checkoutLogic() {}

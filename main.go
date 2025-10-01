@@ -11,9 +11,14 @@ import (
 type Order struct {
 	orderId      int
 	customerName string
+	itemsOrdered []interface{}
 	totalPrice   float32
 	timeOfOrder  time.Time
 }
+
+// type MenuItem struct {
+// 	sandwich Sandwich
+// }
 
 func main() {
 	fmt.Println("\n\t\t======WELCOME TO THE SANDWICH SHOP!=====")
@@ -71,110 +76,105 @@ type Sandwich struct {
 }
 
 func sandwichLogic() {
-	userSandwich := Sandwich{}
-	userSandwich = createSandwich(userSandwich)
+	newSandwich := Sandwich{}
+	newSandwich = createSandwich(newSandwich)
 
 }
 
-func createSandwich(newSandwich Sandwich) Sandwich {
-	userSize := ""
-	userBread := ""
-	userMeat := ""
-	userCheese := ""
-	userSauce := ""
-	userToppings := []string{}
-	extraMeat := false
-	extraCheese := false
+func createSandwich(s Sandwich) Sandwich {
+
+	s.ExtraMeat = false
+	s.ExtraCheese = false
 
 	sizeNum := ui.SandwichSizes()
 	switch sizeNum {
 	case 1:
-		userSize = "small"
+		s.Size = "small"
 	case 2:
-		userSize = "medium"
+		s.Size = "medium"
 	case 3:
-		userSize = "large"
+		s.Size = "large"
 	}
 
 	breadNum := ui.SandwichBreads()
 	switch breadNum {
 	case 1:
-		userBread = "white"
+		s.Bread = "white"
 	case 2:
-		userBread = "wheat"
+		s.Bread = "wheat"
 	case 3:
-		userBread = "sourdough"
+		s.Bread = "sourdough"
 	case 4:
-		userBread = "lettuce wrap"
+		s.Bread = "lettuce wrap"
 	}
 
 	meatNum := ui.SandwichMeats()
 	switch meatNum {
 	case 1:
-		userMeat = "turkey"
+		s.Meat = "turkey"
 	case 2:
-		userMeat = "ham"
+		s.Meat = "ham"
 	case 3:
-		userMeat = "roast beef"
+		s.Meat = "roast beef"
 	case 4:
-		userMeat = "steak"
+		s.Meat = "steak"
 	case 0:
-		userMeat = "none"
+		s.Meat = "none"
 	}
-	if userMeat != "none" {
-		extraMeatNum := ui.ExtraMeatOption(userSize)
+	if s.Meat != "none" {
+		extraMeatNum := ui.ExtraMeatOption(s.Size)
 		if extraMeatNum == 1 {
-			extraMeat = true
+			s.ExtraMeat = true
 		}
 	}
 
 	cheeseNum := ui.SandwichCheese()
 	switch cheeseNum {
 	case 1:
-		userCheese = "american"
+		s.Cheese = "american"
 	case 2:
-		userCheese = "cheddar"
+		s.Cheese = "cheddar"
 	case 3:
-		userCheese = "provolone"
+		s.Cheese = "provolone"
 	case 4:
-		userCheese = "swiss"
+		s.Cheese = "swiss"
 	case 0:
-		userCheese = "none"
+		s.Cheese = "none"
 	}
-	if userCheese != "none" {
-		extraCheeseNum := ui.ExtraCheeseOption(userSize)
+	if s.Cheese != "none" {
+		extraCheeseNum := ui.ExtraCheeseOption(s.Size)
 		if extraCheeseNum == 1 {
-			extraCheese = true
+			s.ExtraCheese = true
 		}
 	}
 
 	sauceNum := ui.SandwichSauce()
 	switch sauceNum {
 	case 1:
-		userSauce = "mayo"
+		s.Sauce = "mayo"
 	case 2:
-		userSauce = "mustard"
+		s.Sauce = "mustard"
 	case 3:
-		userSauce = "ketchup"
+		s.Sauce = "ketchup"
 	case 4:
-		userSauce = "none"
+		s.Sauce = "none"
 	}
 
 	for {
 		toppingNum := ui.SandwichTopping()
 		switch toppingNum {
 		case 1:
-			userToppings = append(userToppings, "onions")
+			s.Toppings = append(s.Toppings, "onions")
 		case 2:
-			userToppings = append(userToppings, "lettuce")
+			s.Toppings = append(s.Toppings, "lettuce")
 		case 3:
-			userToppings = append(userToppings, "peppers")
+			s.Toppings = append(s.Toppings, "peppers")
 		case 4:
-			userToppings = append(userToppings, "pickles")
+			s.Toppings = append(s.Toppings, "pickles")
 		case 5:
-			userToppings = append(userToppings, "tomatoes")
+			s.Toppings = append(s.Toppings, "tomatoes")
 		case 0:
-			userToppings = []string{"none"}
+			s.Toppings = []string{"none"}
 		}
 
 		fmt.Println("Would you like to add another topping?\n1 - Yes\n2 - No")
@@ -184,18 +184,7 @@ func createSandwich(newSandwich Sandwich) Sandwich {
 		}
 	}
 
-	newSandwich = Sandwich{
-		Size:        userSize,
-		Bread:       userBread,
-		Meat:        userMeat,
-		Cheese:      userCheese,
-		Sauce:       userSauce,
-		Toppings:    userToppings,
-		ExtraMeat:   extraMeat,
-		ExtraCheese: extraCheese,
-	}
-
-	return newSandwich
+	return s
 }
 
 func chipLogic() {}

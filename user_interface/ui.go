@@ -37,7 +37,7 @@ func SandwichBreads() int {
 }
 
 func SandwichMeats() int {
-	fmt.Println("\nPlease choose your meat")
+	fmt.Println("\nPlease choose your meat. Small: +$1.00 | Medium: +$2.00 | Large: +$3.00")
 	fmt.Println("\n-----OPTIONS-----")
 	fmt.Println("1 - Turkey\n2 - Ham\n3 - Roast Beef\n4 - Steak\n0 - None")
 
@@ -64,7 +64,7 @@ func ExtraMeatOption(size string) int {
 }
 
 func SandwichCheese() int {
-	fmt.Println("\nPlease choose your cheese")
+	fmt.Println("\nPlease choose your cheese. Small: +$0.75 | Medium: +$1.50 | Large: +$2.25")
 	fmt.Println("\n-----OPTIONS-----")
 	fmt.Println("1 - American\n2 - Cheddar\n3 - Provolone\n4 - Swiss\n0 - None")
 

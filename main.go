@@ -80,8 +80,9 @@ type Sandwich struct {
 func sandwichLogic() {
 	newSandwich := Sandwich{}
 	newSandwich = createSandwich(newSandwich)
+	sandwichPrice := calculateSandwichPrice(newSandwich)
 
-	userValidation := validateSandwich(newSandwich)
+	userValidation := validateSandwich(newSandwich, sandwichPrice)
 	switch userValidation {
 	case 1:
 		fmt.Println("Your sandwich will be added to your order!")
@@ -187,9 +188,13 @@ func createSandwich(s Sandwich) Sandwich {
 			s.Toppings = []string{"none"}
 		}
 
-		fmt.Println("Would you like to add another topping?\n1 - Yes\n2 - No")
-		moreToppings := utils.GetValidatedNumber("Enter option: ", 1, 2)
-		if moreToppings == 2 {
+		if toppingNum != 0 {
+			fmt.Println("Would you like to add another topping?\n1 - Yes\n2 - No")
+			moreToppings := utils.GetValidatedNumber("Enter option: ", 1, 2)
+			if moreToppings == 2 {
+				break
+			}
+		} else {
 			break
 		}
 	}
@@ -197,7 +202,64 @@ func createSandwich(s Sandwich) Sandwich {
 	return s
 }
 
-func validateSandwich(s Sandwich) int {
+func calculateSandwichPrice(s Sandwich) float32 {
+	var totalPrice float32
+	totalPrice = 0.0
+
+	switch s.Size {
+	case "small":
+		totalPrice = 5.50
+
+		if s.Meat != "none" {
+			totalPrice += 1.00
+		}
+		if s.ExtraMeat {
+			totalPrice += .50
+		}
+		if s.Cheese != "none" {
+			totalPrice += .75
+		}
+		if s.ExtraCheese {
+			totalPrice += .30
+		}
+
+	case "medium":
+		totalPrice = 7.00
+
+		if s.Meat != "none" {
+			totalPrice += 2.00
+		}
+		if s.ExtraMeat {
+			totalPrice += 1.00
+		}
+		if s.Cheese != "none" {
+			totalPrice += 1.50
+		}
+		if s.ExtraCheese {
+			totalPrice += .60
+		}
+
+	case "large":
+		totalPrice = 8.50
+
+		if s.Meat != "none" {
+			totalPrice += 3.00
+		}
+		if s.ExtraMeat {
+			totalPrice += 1.50
+		}
+		if s.Cheese != "none" {
+			totalPrice += 2.25
+		}
+		if s.ExtraCheese {
+			totalPrice += .90
+		}
+	}
+
+	return totalPrice
+}
+
+func validateSandwich(s Sandwich, price float32) int {
 	fmt.Println("\nSize:", s.Size)
 	fmt.Println("Bread:", s.Bread)
 	fmt.Println("Meat:", s.Meat)
@@ -213,6 +275,7 @@ func validateSandwich(s Sandwich) int {
 	for _, topping := range s.Toppings {
 		fmt.Println("Topping:", topping)
 	}
+	fmt.Printf("\nTotal Price: $%.2f", price)
 
 	fmt.Println("\nIs this sandwich correct?\n1 - Yes\n2 - No")
 	return utils.GetValidatedNumber("Enter option: ", 1, 2)

@@ -60,6 +60,8 @@ func orderScreenLogic() {
 			drinkLogic()
 		case 4:
 			checkoutLogic()
+		case 0:
+			ifContinue = false
 		}
 	}
 }
@@ -78,6 +80,14 @@ type Sandwich struct {
 func sandwichLogic() {
 	newSandwich := Sandwich{}
 	newSandwich = createSandwich(newSandwich)
+
+	userValidation := validateSandwich(newSandwich)
+	switch userValidation {
+	case 1:
+		fmt.Println("Your sandwich will be added to your order!")
+	case 2:
+		fmt.Println("My apologies... you can retry from the order menu.")
+	}
 
 }
 
@@ -185,6 +195,27 @@ func createSandwich(s Sandwich) Sandwich {
 	}
 
 	return s
+}
+
+func validateSandwich(s Sandwich) int {
+	fmt.Println("\nSize:", s.Size)
+	fmt.Println("Bread:", s.Bread)
+	fmt.Println("Meat:", s.Meat)
+	if s.ExtraMeat {
+		fmt.Println("Extra Meat!")
+	}
+	fmt.Println("Cheese:", s.Cheese)
+	if s.ExtraCheese {
+		fmt.Println("Extra Cheese!")
+	}
+	fmt.Println("Sauce:", s.Sauce)
+
+	for _, topping := range s.Toppings {
+		fmt.Println("Topping:", topping)
+	}
+
+	fmt.Println("\nIs this sandwich correct?\n1 - Yes\n2 - No")
+	return utils.GetValidatedNumber("Enter option: ", 1, 2)
 }
 
 func chipLogic() {}

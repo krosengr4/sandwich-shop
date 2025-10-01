@@ -59,8 +59,8 @@ func ExtraMeatOption(size string) int {
 		price = 1.50
 	}
 
-	fmt.Printf("1 - Yes(+$%f) 2 - No", price)
-	return utils.GetValidatedNumber("Enter option: ", 0, 1)
+	fmt.Printf("1 - Yes(+$%.2f)\n2 - No\n", price)
+	return utils.GetValidatedNumber("Enter option: ", 1, 2)
 }
 
 func SandwichCheese() int {
@@ -86,8 +86,8 @@ func ExtraCheeseOption(size string) int {
 		price = .90
 	}
 
-	fmt.Printf("1 - Yes(+$%f) 2 - No", price)
-	return utils.GetValidatedNumber("Enter option: ", 0, 1)
+	fmt.Printf("1 - Yes(+$%.2f)\n2 - No\n", price)
+	return utils.GetValidatedNumber("Enter option: ", 1, 2)
 }
 
 func SandwichSauce() int {

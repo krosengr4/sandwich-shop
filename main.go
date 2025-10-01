@@ -28,7 +28,7 @@ func mainMenuLogic() {
 	ifContinue := true
 
 	for ifContinue {
-		userChoice := ui.DisplayHome()
+		userChoice := ui.HomeScreen()
 
 		switch userChoice {
 		case 1:
@@ -43,11 +43,12 @@ func orderScreenLogic() {
 	ifContinue := true
 
 	for ifContinue {
-		userChoice := ui.DisplayOrderScreen()
+		userChoice := ui.OrderScreen()
 
 		switch userChoice {
 		case 1:
-			sandwichLogic()
+			userSandwich := new(Sandwich)
+			userSandwich.sandwichLogic()
 		case 2:
 			chipLogic()
 		case 3:
@@ -58,7 +59,18 @@ func orderScreenLogic() {
 	}
 }
 
-func sandwichLogic() {}
+type Sandwich struct {
+	Size        string
+	Bread       string
+	Meat        string
+	Cheese      string
+	Sauce       string
+	Toppings    []string
+	ExtraMeat   bool
+	ExtraCheese bool
+}
+
+func (*Sandwich) sandwichLogic() {}
 
 func chipLogic() {}
 

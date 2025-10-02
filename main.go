@@ -66,7 +66,7 @@ func orderScreenLogic() {
 		case 4:
 			checkoutLogic()
 		case 0:
-			// todo: See if userOrder should be cleared here.
+			userOrder = Order{}
 			fmt.Println("Order cancelled.")
 			ifContinue = false
 		}

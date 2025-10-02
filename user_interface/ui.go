@@ -129,7 +129,7 @@ func ChipSizes() int {
 // #region Drink UI
 func DrinkTypes() int {
 	fmt.Println("\n-----DRINK OPTIONS-----")
-	fmt.Println("1 - Fountain Drink\n2 - Lemonade\n3 - Milkshake\n0 - Go Back")
+	fmt.Println("1 - Soda\n2 - Lemonade\n3 - Milkshake\n0 - Go Back")
 
 	return utils.GetValidatedNumber("Enter opiton: ", 0, 3)
 }

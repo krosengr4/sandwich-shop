@@ -285,7 +285,7 @@ func validateSandwich(s Sandwich) int {
 
 // #endregion
 
-// #Chip Logic
+// #region Chip Logic
 type Chip struct {
 	Type  string
 	Size  string
@@ -308,7 +308,7 @@ func chipLogic() {
 	}
 
 	fmt.Println("\n---CHIP---")
-	fmt.Printf("Type: %s\nSize: %s\nPrice: $%.2f\n", utils.CapitalizeFirstLetter(newChip.Type), utils.CapitalizeFirstLetter(newChip.Size), newChip.Price)
+	fmt.Printf("Chip Type: %s\nChip Size: %s\nChip Price: $%.2f\n", utils.CapitalizeFirstLetter(newChip.Type), utils.CapitalizeFirstLetter(newChip.Size), newChip.Price)
 
 }
 
@@ -361,6 +361,82 @@ func calculateChipPrice(size string) float32 {
 	return chipPrice
 }
 
-func drinkLogic() {}
+// #endregion
+
+// #region Drink Logic
+type Drink struct {
+	Type  string
+	Size  string
+	Price float32
+}
+
+func drinkLogic() {
+	drinkType := getDrinkType()
+	if drinkType == "" {
+		return
+	}
+
+	drinkSize := getDrinkSize()
+	drinkPrice := calculateDrinkPrice(drinkSize)
+
+	newDrink := Drink{
+		Type:  drinkType,
+		Size:  drinkSize,
+		Price: drinkPrice,
+	}
+
+	fmt.Println("\n---DRINK---")
+	fmt.Printf("Drink Type: %s\nDrink Size: %s\nDrink Price: $%.2f\n", utils.CapitalizeFirstLetter(newDrink.Type), utils.CapitalizeFirstLetter(newDrink.Size), newDrink.Price)
+
+}
+
+func getDrinkType() string {
+	var drinkType string
+	userChoice := ui.DrinkTypes()
+
+	switch userChoice {
+	case 1:
+		drinkType = "soda"
+	case 2:
+		drinkType = "lemonade"
+	case 3:
+		drinkType = "milkshake"
+	case 0:
+		return ""
+	}
+
+	return drinkType
+}
+
+func getDrinkSize() string {
+	var drinkSize string
+	userChoice := ui.DrinkSizes()
+
+	switch userChoice {
+	case 1:
+		drinkSize = "small"
+	case 2:
+		drinkSize = "medium"
+	case 3:
+		drinkSize = "large"
+	}
+
+	return drinkSize
+}
+
+func calculateDrinkPrice(size string) float32 {
+	var drinkPrice float32
+
+	switch size {
+	case "small":
+		drinkPrice = 2.00
+	case "medium":
+		drinkPrice = 2.50
+	case "large":
+		drinkPrice = 3.00
+	}
+
+	return drinkPrice
+}
 
 func checkoutLogic() {}

@@ -6,6 +6,7 @@ import (
 	"os"
 	"strconv"
 	"strings"
+	"unicode"
 )
 
 // Helper function to get a validated number within range
@@ -26,4 +27,14 @@ func GetValidatedNumber(prompt string, min, max int) int {
 			fmt.Println("Invalid number. Please try again.")
 		}
 	}
+}
+
+func CapitalizeFirstLetter(s string) string {
+	if len(s) == 0 {
+		return ""
+	}
+
+	runes := []rune(s)
+	runes[0] = unicode.ToUpper(runes[0])
+	return string(runes)
 }

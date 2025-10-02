@@ -4,26 +4,14 @@ import (
 	"bufio"
 	"fmt"
 	"os"
+	"sandwich-shop/models"
 	ui "sandwich-shop/user_interface"
 	"sandwich-shop/utils"
 	"strings"
 	"time"
 )
 
-type Order struct {
-	customerName string
-	itemsOrdered []MenuItem
-	totalPrice   float32
-	timeOfOrder  time.Time
-}
-
-var userOrder Order
-
-// Pricer defines an interface for any item that has a price
-type MenuItem interface {
-	GetPrice() float32
-	PrintData()
-}
+var userOrder models.Order
 
 func main() {
 	fmt.Println("\n\t\t======WELCOME TO THE SANDWICH SHOP!=====")
@@ -66,7 +54,7 @@ func orderScreenLogic() {
 		case 4:
 			checkoutLogic()
 		case 0:
-			userOrder = Order{}
+			userOrder = models.Order{}
 			fmt.Println("Order cancelled.")
 			ifContinue = false
 		}
@@ -74,58 +62,22 @@ func orderScreenLogic() {
 }
 
 // #region Sandwich Logic
-type Sandwich struct {
-	Size        string
-	Bread       string
-	Meat        string
-	Cheese      string
-	Sauce       string
-	Toppings    []string
-	ExtraMeat   bool
-	ExtraCheese bool
-	Price       float32
-}
-
-func (s Sandwich) GetPrice() float32 {
-	return s.Price
-}
-
-func (s Sandwich) PrintData() {
-	fmt.Println("\n---SANDWICH---")
-	fmt.Println("Size:", utils.CapitalizeFirstLetter(s.Size))
-	fmt.Println("Bread:", utils.CapitalizeFirstLetter(s.Bread))
-	fmt.Println("Meat:", utils.CapitalizeFirstLetter(s.Meat))
-	if s.ExtraMeat {
-		fmt.Println("Extra Meat!")
-	}
-	fmt.Println("Cheese:", utils.CapitalizeFirstLetter(s.Cheese))
-	if s.ExtraCheese {
-		fmt.Println("Extra Cheese!")
-	}
-	fmt.Println("Sauce:", utils.CapitalizeFirstLetter(s.Sauce))
-
-	for _, topping := range s.Toppings {
-		fmt.Println("Topping:", utils.CapitalizeFirstLetter(topping))
-	}
-	fmt.Printf("\nSandwich Price: $%.2f", s.Price)
-}
-
 func sandwichLogic() {
-	newSandwich := Sandwich{}
+	newSandwich := models.Sandwich{}
 	newSandwich = createSandwich(newSandwich)
 	newSandwich = calculateSandwichPrice(newSandwich)
 
 	userValidation := validateSandwich(newSandwich)
 	switch userValidation {
 	case 1:
-		userOrder.itemsOrdered = append(userOrder.itemsOrdered, newSandwich)
+		userOrder.ItemsOrdered = append(userOrder.ItemsOrdered, newSandwich)
 	case 2:
 		fmt.Println("My apologies... you can retry from the order menu.")
 	}
 
 }
 
-func createSandwich(s Sandwich) Sandwich {
+func createSandwich(s models.Sandwich) models.Sandwich {
 
 	s.ExtraMeat = false
 	s.ExtraCheese = false
@@ -235,7 +187,7 @@ func createSandwich(s Sandwich) Sandwich {
 	return s
 }
 
-func calculateSandwichPrice(s Sandwich) Sandwich {
+func calculateSandwichPrice(s models.Sandwich) models.Sandwich {
 	s.Price = 0.0
 
 	switch s.Size {
@@ -291,7 +243,7 @@ func calculateSandwichPrice(s Sandwich) Sandwich {
 	return s
 }
 
-func validateSandwich(s Sandwich) int {
+func validateSandwich(s models.Sandwich) int {
 
 	s.PrintData()
 
@@ -302,23 +254,6 @@ func validateSandwich(s Sandwich) int {
 // #endregion
 
 // #region Chip Logic
-type Chip struct {
-	Type  string
-	Size  string
-	Price float32
-}
-
-func (c Chip) GetPrice() float32 {
-	return c.Price
-}
-
-func (c Chip) PrintData() {
-	fmt.Println("\n---CHIP---")
-	fmt.Println("Chip Type:", c.Type)
-	fmt.Println("Chip Size:", c.Size)
-	fmt.Printf("\nChip Price: $%.2f\n", c.Price)
-}
-
 func chipLogic() {
 	chipType := getChipType()
 	if chipType == "" {
@@ -328,7 +263,7 @@ func chipLogic() {
 	chipSize := getChipSize()
 	chipPrice := calculateChipPrice(chipSize)
 
-	newChip := Chip{
+	newChip := models.Chip{
 		Type:  chipType,
 		Size:  chipSize,
 		Price: chipPrice,
@@ -336,7 +271,7 @@ func chipLogic() {
 
 	newChip.PrintData()
 
-	userOrder.itemsOrdered = append(userOrder.itemsOrdered, newChip)
+	userOrder.ItemsOrdered = append(userOrder.ItemsOrdered, newChip)
 	fmt.Println("Chips added to order!")
 }
 
@@ -392,23 +327,6 @@ func calculateChipPrice(size string) float32 {
 // #endregion
 
 // #region Drink Logic
-type Drink struct {
-	Type  string
-	Size  string
-	Price float32
-}
-
-func (d Drink) GetPrice() float32 {
-	return d.Price
-}
-
-func (d Drink) PrintData() {
-	fmt.Println("\n---DRINK---")
-	fmt.Println("Drink Type:", d.Type)
-	fmt.Println("Drink Size:", d.Size)
-	fmt.Printf("\nDrink Price: $%.2f\n", d.Price)
-}
-
 func drinkLogic() {
 	drinkType := getDrinkType()
 	if drinkType == "" {
@@ -418,7 +336,7 @@ func drinkLogic() {
 	drinkSize := getDrinkSize()
 	drinkPrice := calculateDrinkPrice(drinkSize)
 
-	newDrink := Drink{
+	newDrink := models.Drink{
 		Type:  drinkType,
 		Size:  drinkSize,
 		Price: drinkPrice,
@@ -426,7 +344,7 @@ func drinkLogic() {
 
 	newDrink.PrintData()
 
-	userOrder.itemsOrdered = append(userOrder.itemsOrdered, newDrink)
+	userOrder.ItemsOrdered = append(userOrder.ItemsOrdered, newDrink)
 	fmt.Println("Drink has been added to your order!")
 }
 
@@ -484,7 +402,7 @@ func calculateDrinkPrice(size string) float32 {
 func checkoutLogic() {
 	scanner := bufio.NewScanner(os.Stdin)
 
-	if len(userOrder.itemsOrdered) == 0 {
+	if len(userOrder.ItemsOrdered) == 0 {
 		fmt.Println("Your order is empty! Please add items before checking out.")
 		return
 	}
@@ -492,10 +410,10 @@ func checkoutLogic() {
 	fmt.Println("\n---CHECKOUT---")
 	fmt.Println("Please enter a name for your order: ")
 	scanner.Scan()
-	userOrder.customerName = utils.CapitalizeFirstLetter(strings.TrimSpace(scanner.Text()))
+	userOrder.CustomerName = utils.CapitalizeFirstLetter(strings.TrimSpace(scanner.Text()))
 
-	userOrder.totalPrice = calculateTotalPrice()
-	userOrder.timeOfOrder = time.Now()
+	userOrder.TotalPrice = calculateTotalPrice()
+	userOrder.TimeOfOrder = time.Now()
 
 	userValidate := validateOrder()
 	switch userValidate {
@@ -505,13 +423,13 @@ func checkoutLogic() {
 		fmt.Println("Oh no... Perhaps we can try again? My apologies.")
 	}
 
-	userOrder = Order{}
+	userOrder = models.Order{}
 }
 
 func calculateTotalPrice() float32 {
 	var totalPrice float32
 
-	for _, item := range userOrder.itemsOrdered {
+	for _, item := range userOrder.ItemsOrdered {
 		totalPrice += item.GetPrice()
 	}
 
@@ -520,16 +438,16 @@ func calculateTotalPrice() float32 {
 
 func validateOrder() int {
 	fmt.Println("\n" + strings.Repeat("*", 50))
-	fmt.Println("ORDER FOR:", strings.ToUpper(userOrder.customerName))
+	fmt.Println("ORDER FOR:", strings.ToUpper(userOrder.CustomerName))
 	fmt.Println(strings.Repeat("*", 50))
 
-	for _, item := range userOrder.itemsOrdered {
+	for _, item := range userOrder.ItemsOrdered {
 		item.PrintData()
 	}
 
 	fmt.Println(strings.Repeat("-", 50))
-	fmt.Printf("\nTotal Price: $%.2f\n\n", userOrder.totalPrice)
+	fmt.Printf("\nTotal Price: $%.2f\n\n", userOrder.TotalPrice)
 
-	fmt.Println("\nIs this order correct?\n1 - Yes\n 2 - No")
+	fmt.Println("\nIs this order correct?\n1 - Yes\n2 - No")
 	return utils.GetValidatedNumber("Enter option: ", 1, 2)
 }

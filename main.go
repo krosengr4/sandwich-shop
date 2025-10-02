@@ -307,6 +307,9 @@ func chipLogic() {
 		Price: chipPrice,
 	}
 
+	fmt.Println("\n---CHIP---")
+	fmt.Printf("Type: %s\nSize: %s\nPrice: $%.2f\n", newChip.Type, newChip.Size, newChip.Price)
+
 }
 
 func getChipType() string {
@@ -329,7 +332,7 @@ func getChipType() string {
 
 func getChipSize() string {
 	var chipSize string
-	userChoice := ui.ChipTypes()
+	userChoice := ui.ChipSizes()
 
 	switch userChoice {
 	case 1:

@@ -20,6 +20,7 @@ func OrderScreen() int {
 	return utils.GetValidatedNumber("Enter option: ", 0, 4)
 }
 
+// #region Sandwich UI
 func SandwichSizes() int {
 	fmt.Println("\nPlease choose your size")
 	fmt.Println("\n-----OPTIONS-----")
@@ -105,3 +106,22 @@ func SandwichTopping() int {
 
 	return utils.GetValidatedNumber("Enter option: ", 0, 5)
 }
+
+// #endregion
+
+// #region Chips UI
+func DisplayChipTypes() int {
+	fmt.Println("\n-----CHIP OPTIONS-----")
+	fmt.Println("1 - Doritos\n2 - Lays Original\n3 - Cheetos\n0 - Go Back")
+
+	return utils.GetValidatedNumber("Enter option: ", 1, 3)
+}
+
+func DisplayChipSizes() int {
+	fmt.Println("-----CHIP SIZE OPTIONS-----")
+	fmt.Println("1 - Small ($1.25)\n2 - Medium ($2.00)\n3 - Large ($2.70)")
+
+	return utils.GetValidatedNumber("Enter option: ", 1, 3)
+}
+
+// #endregion

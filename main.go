@@ -66,6 +66,7 @@ func orderScreenLogic() {
 	}
 }
 
+// #region Sandwich Logic
 type Sandwich struct {
 	Size        string
 	Bread       string
@@ -282,7 +283,80 @@ func validateSandwich(s Sandwich) int {
 	return utils.GetValidatedNumber("Enter option: ", 1, 2)
 }
 
-func chipLogic() {}
+// #endregion
+
+// #Chip Logic
+type Chip struct {
+	Type  string
+	Size  string
+	Price float32
+}
+
+func chipLogic() {
+	chipType := getChipType()
+	if chipType == "" {
+		return
+	}
+
+	chipSize := getChipSize()
+	chipPrice := calculateChipPrice(chipSize)
+
+	newChip := Chip{
+		Type:  chipType,
+		Size:  chipSize,
+		Price: chipPrice,
+	}
+
+}
+
+func getChipType() string {
+	var chipType string
+	userChoice := ui.DisplayChipTypes()
+
+	switch userChoice {
+	case 1:
+		chipType = "doritos"
+	case 2:
+		chipType = "lays original"
+	case 3:
+		chipType = "cheetos"
+	case 0:
+		return ""
+	}
+
+	return chipType
+}
+
+func getChipSize() string {
+	var chipSize string
+	userChoice := ui.DisplayChipTypes()
+
+	switch userChoice {
+	case 1:
+		chipSize = "small"
+	case 2:
+		chipSize = "medium"
+	case 3:
+		chipSize = "large"
+	}
+
+	return chipSize
+}
+
+func calculateChipPrice(size string) float32 {
+	var chipPrice float32
+
+	switch size {
+	case "small":
+		chipPrice = 1.25
+	case "medium":
+		chipPrice = 2.00
+	case "large":
+		chipPrice = 2.70
+	}
+
+	return chipPrice
+}
 
 func drinkLogic() {}
 

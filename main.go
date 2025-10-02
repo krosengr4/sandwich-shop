@@ -311,7 +311,7 @@ func chipLogic() {
 
 func getChipType() string {
 	var chipType string
-	userChoice := ui.DisplayChipTypes()
+	userChoice := ui.ChipTypes()
 
 	switch userChoice {
 	case 1:
@@ -329,7 +329,7 @@ func getChipType() string {
 
 func getChipSize() string {
 	var chipSize string
-	userChoice := ui.DisplayChipTypes()
+	userChoice := ui.ChipTypes()
 
 	switch userChoice {
 	case 1:

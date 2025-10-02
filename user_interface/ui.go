@@ -24,7 +24,7 @@ func OrderScreen() int {
 func SandwichSizes() int {
 	fmt.Println("\nPlease choose your size")
 	fmt.Println("\n-----OPTIONS-----")
-	fmt.Println("1 - Small(4\") ... $5.50\n2 - Medium(8\") ... $7.00\n3 - Large(12\") ... $8.50")
+	fmt.Println("1 - Small (4\") ... $5.50\n2 - Medium (8\") ... $7.00\n3 - Large (12\") ... $8.50")
 
 	return utils.GetValidatedNumber("Enter option: ", 1, 3)
 }
@@ -110,16 +110,33 @@ func SandwichTopping() int {
 // #endregion
 
 // #region Chips UI
-func DisplayChipTypes() int {
+func ChipTypes() int {
 	fmt.Println("\n-----CHIP OPTIONS-----")
 	fmt.Println("1 - Doritos\n2 - Lays Original\n3 - Cheetos\n0 - Go Back")
+
+	return utils.GetValidatedNumber("Enter option: ", 0, 3)
+}
+
+func ChipSizes() int {
+	fmt.Println("\n-----CHIP SIZE OPTIONS-----")
+	fmt.Println("1 - Small ($1.25)\n2 - Medium ($2.00)\n3 - Large ($2.70)")
 
 	return utils.GetValidatedNumber("Enter option: ", 1, 3)
 }
 
-func DisplayChipSizes() int {
-	fmt.Println("-----CHIP SIZE OPTIONS-----")
-	fmt.Println("1 - Small ($1.25)\n2 - Medium ($2.00)\n3 - Large ($2.70)")
+// #endregion
+
+// #region Drink UI
+func DrinkTypes() int {
+	fmt.Println("\n-----DRINK OPTIONS-----")
+	fmt.Println("1 - Fountain Drink\n2 - Lemonade\n3 - Milkshake\n0 - Go Back")
+
+	return utils.GetValidatedNumber("Enter opiton: ", 0, 3)
+}
+
+func DrinkSizes() int {
+	fmt.Println("\n-----DRINK SIZES-----")
+	fmt.Println("1 - Small (12oz) ... $2.00\n2 - Medium (24oz) ... $2.50\n3 - Large (32ox) ... $3.00")
 
 	return utils.GetValidatedNumber("Enter option: ", 1, 3)
 }

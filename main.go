@@ -262,20 +262,20 @@ func calculateSandwichPrice(s Sandwich) Sandwich {
 
 func validateSandwich(s Sandwich) int {
 	fmt.Println("\n---YOUR SANDWICH---")
-	fmt.Println("Size:", s.Size)
-	fmt.Println("Bread:", s.Bread)
-	fmt.Println("Meat:", s.Meat)
+	fmt.Println("Size:", utils.CapitalizeFirstLetter(s.Size))
+	fmt.Println("Bread:", utils.CapitalizeFirstLetter(s.Bread))
+	fmt.Println("Meat:", utils.CapitalizeFirstLetter(s.Meat))
 	if s.ExtraMeat {
 		fmt.Println("Extra Meat!")
 	}
-	fmt.Println("Cheese:", s.Cheese)
+	fmt.Println("Cheese:", utils.CapitalizeFirstLetter(s.Cheese))
 	if s.ExtraCheese {
 		fmt.Println("Extra Cheese!")
 	}
-	fmt.Println("Sauce:", s.Sauce)
+	fmt.Println("Sauce:", utils.CapitalizeFirstLetter(s.Sauce))
 
 	for _, topping := range s.Toppings {
-		fmt.Println("Topping:", topping)
+		fmt.Println("Topping:", utils.CapitalizeFirstLetter(topping))
 	}
 	fmt.Printf("\nTotal Price: $%.2f", s.Price)
 
@@ -308,7 +308,7 @@ func chipLogic() {
 	}
 
 	fmt.Println("\n---CHIP---")
-	fmt.Printf("Type: %s\nSize: %s\nPrice: $%.2f\n", newChip.Type, newChip.Size, newChip.Price)
+	fmt.Printf("Type: %s\nSize: %s\nPrice: $%.2f\n", utils.CapitalizeFirstLetter(newChip.Type), utils.CapitalizeFirstLetter(newChip.Size), newChip.Price)
 
 }
 

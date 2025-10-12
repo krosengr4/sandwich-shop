@@ -71,6 +71,7 @@ func sandwichLogic() {
 	switch userValidation {
 	case 1:
 		userOrder.ItemsOrdered = append(userOrder.ItemsOrdered, newSandwich)
+		userOrder.Quantity += 1
 	case 2:
 		fmt.Println("My apologies... you can retry from the order menu.")
 	}
@@ -272,6 +273,7 @@ func chipLogic() {
 	newChip.PrintData()
 
 	userOrder.ItemsOrdered = append(userOrder.ItemsOrdered, newChip)
+	userOrder.Quantity += 1
 	fmt.Println("Chips added to order!")
 }
 
@@ -345,6 +347,7 @@ func drinkLogic() {
 	newDrink.PrintData()
 
 	userOrder.ItemsOrdered = append(userOrder.ItemsOrdered, newDrink)
+	userOrder.Quantity += 1
 	fmt.Println("Drink has been added to your order!")
 }
 

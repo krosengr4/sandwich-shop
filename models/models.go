@@ -10,6 +10,7 @@ type Order struct {
 	ID           int
 	CustomerName string
 	ItemsOrdered []MenuItem
+	Quantity     int
 	TotalPrice   float32
 	TimeOfOrder  time.Time
 }
@@ -53,7 +54,7 @@ func (s Sandwich) PrintData() {
 	for _, topping := range s.Toppings {
 		fmt.Println("Topping:", utils.CapitalizeFirstLetter(topping))
 	}
-	fmt.Printf("\nSandwich Price: $%.2f", s.Price)
+	fmt.Printf("\nSandwich Price: $%.2f\n", s.Price)
 }
 
 type Chip struct {

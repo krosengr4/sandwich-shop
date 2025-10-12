@@ -4,6 +4,7 @@ import (
 	"database/sql"
 	"fmt"
 	"sandwich-shop/config"
+	"sandwich-shop/models"
 )
 
 type Database struct {
@@ -33,5 +34,28 @@ func (d *Database) Close() error {
 }
 
 // todo: Method that gets all orders from the db
+func (d *Database) GetAllOrders() ([]*models.Order, error) {
+	query := "SELECT * FROM orders;"
+
+	rows, err := d.conn.Query(query)
+	if err != nil {
+		return nil, fmt.Errorf("failed to query orders: %w", err)
+	}
+	defer rows.Close()
+
+	var orders []*models.Order
+	for rows.Next() {
+		var order models.Order
+
+		err := rows.Scan(&order.ID, order.CustomerName, order.ItemsOrdered, order.TotalPrice, order.TotalPrice, order.TimeOfOrder)
+		if err != nil {
+			return nil, fmt.Errorf("failed to scan order: %w", err)
+		}
+
+		orders = append(orders, &order)
+	}
+
+	return orders, nil
+}
 
 // todo: Method that adds an order to the db

@@ -28,6 +28,10 @@ func GetConnection(cfg *config.DatabaseConfig) (*Database, error) {
 	return &Database{conn: db}, nil
 }
 
+func (d *Database) Close() error {
+	return d.conn.Close()
+}
+
 // todo: Method that gets all orders from the db
 
 // todo: Method that adds an order to the db

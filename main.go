@@ -3,12 +3,17 @@ package main
 import (
 	"bufio"
 	"fmt"
+	"log"
 	"os"
+	"sandwich-shop/config"
+	"sandwich-shop/database"
 	"sandwich-shop/models"
 	ui "sandwich-shop/user_interface"
 	"sandwich-shop/utils"
 	"strings"
 	"time"
+
+	_ "github.com/go-sql-driver/mysql"
 )
 
 var userOrder models.Order
@@ -17,13 +22,32 @@ func main() {
 	fmt.Println("\n\t\t======WELCOME TO THE SANDWICH SHOP!=====")
 	fmt.Println(strings.Repeat("_", 80))
 
-	mainMenuLogic()
+	db, err := initDB()
+	if err != nil {
+		log.Fatalf("Failed to get a connection to the database: %v", err)
+
+	}
+	defer db.Close()
+
+	mainMenuLogic(db)
 
 	fmt.Println("\n\t\t=====GOODBYE!======")
 	fmt.Println(strings.Repeat("_", 80))
 }
 
-func mainMenuLogic() {
+func initDB() (*database.Database, error) {
+	// Load env variables
+	if err := config.LoadEnv(".env"); err != nil {
+		log.Fatalf("Error loading .env file: %v", err)
+	}
+
+	// Get DB configurations with env variables
+	dbConfig := config.GetDatabaseConfig()
+
+	return database.GetConnection(dbConfig)
+}
+
+func mainMenuLogic(db *database.Database) {
 	ifContinue := true
 
 	for ifContinue {
@@ -31,14 +55,14 @@ func mainMenuLogic() {
 
 		switch userChoice {
 		case 1:
-			orderScreenLogic()
+			orderScreenLogic(db)
 		case 0:
 			ifContinue = false
 		}
 	}
 }
 
-func orderScreenLogic() {
+func orderScreenLogic(db *database.Database) {
 	ifContinue := true
 
 	for ifContinue {
@@ -52,7 +76,7 @@ func orderScreenLogic() {
 		case 3:
 			drinkLogic()
 		case 4:
-			checkoutLogic()
+			checkoutLogic(db)
 		case 0:
 			userOrder = models.Order{}
 			fmt.Println("Order cancelled.")
@@ -402,7 +426,7 @@ func calculateDrinkPrice(size string) float32 {
 
 // #endregion
 
-func checkoutLogic() {
+func checkoutLogic(db *database.Database) {
 	scanner := bufio.NewScanner(os.Stdin)
 
 	if len(userOrder.ItemsOrdered) == 0 {
@@ -422,6 +446,7 @@ func checkoutLogic() {
 	switch userValidate {
 	case 1:
 		fmt.Println("Success! Your order will be right out!")
+		db.AddOrder(&userOrder)
 	case 2:
 		fmt.Println("Oh no... Perhaps we can try again? My apologies.")
 	}

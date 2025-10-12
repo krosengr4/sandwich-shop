@@ -4,6 +4,7 @@ import (
 	"database/sql"
 	"fmt"
 	"sandwich-shop/config"
+	"sandwich-shop/models"
 )
 
 type Database struct {
@@ -32,6 +33,38 @@ func (d *Database) Close() error {
 	return d.conn.Close()
 }
 
-// todo: Method that gets all orders from the db
+func (d *Database) GetAllOrders() ([]*models.Order, error) {
+	query := "SELECT order_id, customer_name, quantity_of_items, total_price, time_ordered FROM orders;"
 
-// todo: Method that adds an order to the db
+	rows, err := d.conn.Query(query)
+	if err != nil {
+		return nil, fmt.Errorf("failed to query orders: %w", err)
+	}
+	defer rows.Close()
+
+	var orders []*models.Order
+	for rows.Next() {
+		var order models.Order
+
+		err := rows.Scan(&order.ID, order.CustomerName, order.ItemsOrdered, order.Quantity, order.TotalPrice, order.TotalPrice, order.TimeOfOrder)
+		if err != nil {
+			return nil, fmt.Errorf("failed to scan order: %w", err)
+		}
+
+		orders = append(orders, &order)
+	}
+
+	return orders, nil
+}
+
+func (d *Database) AddOrder(order *models.Order) error {
+	query := "INSERT INTO orders (customer_name, quantity_of_items, total_price, time_ordered) VALUES (?, ?, ?, ?);"
+
+	_, err := d.conn.Exec(query, order.CustomerName, order.Quantity, order.TotalPrice, order.TimeOfOrder)
+	if err != nil {
+		return fmt.Errorf("failed to add the order: %w", err)
+	}
+
+	fmt.Println("Success! The order was added to the db!")
+	return nil
+}

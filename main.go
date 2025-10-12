@@ -445,8 +445,9 @@ func validateOrder() int {
 		item.PrintData()
 	}
 
-	fmt.Println(strings.Repeat("-", 50))
-	fmt.Printf("\nTotal Price: $%.2f\n\n", userOrder.TotalPrice)
+	fmt.Println(strings.Repeat("*", 50))
+	fmt.Printf("\nTotal Items: %d\n", userOrder.Quantity)
+	fmt.Printf("Total Price: $%.2f\n\n", userOrder.TotalPrice)
 
 	fmt.Println("\nIs this order correct?\n1 - Yes\n2 - No")
 	return utils.GetValidatedNumber("Enter option: ", 1, 2)

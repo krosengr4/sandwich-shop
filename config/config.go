@@ -52,9 +52,14 @@ func LoadEnv(filename string) error {
 
 // Retrieves db config from env variables
 func GetDatabaseConfig() *DatabaseConfig {
+	dbPassword, exists := os.LookupEnv("SQL_PASSWORD")
+	if !exists {
+		fmt.Println("Error! The env password for the database does not exist!")
+	}
+
 	return &DatabaseConfig{
 		Username: os.Getenv("DB_USERNAME"),
-		Password: os.Getenv("DB_PASSWORD"),
+		Password: dbPassword,
 		Host:     os.Getenv("DB_HOST"),
 		Port:     os.Getenv("DB_PORT"),
 		DBName:   os.Getenv("DB_NAME"),

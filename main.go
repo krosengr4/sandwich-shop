@@ -510,5 +510,42 @@ func verifyAdmin() {
 }
 
 func adminScreen() {
-	fmt.Println("Admin screen!")
+	ifContinue := true
+
+	for ifContinue {
+		adminChoice := ui.AdminScreen()
+
+		switch adminChoice {
+		case 1:
+			viewAllOrders()
+		case 2:
+			editOrder()
+		case 3:
+			deleteOrder()
+		case 0:
+			ifContinue = false
+		}
+	}
+
+
+
+
+}
+
+func viewAllOrders() {
+
+	fmt.Println("view all orders")
+
+}
+
+func editOrder() {
+
+	fmt.Println("Edit an order")
+
+}
+
+func deleteOrder() {
+
+	fmt.Println("Delete an order")
+
 }

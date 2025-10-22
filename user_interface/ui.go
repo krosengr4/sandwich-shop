@@ -8,9 +8,9 @@ import (
 
 func HomeScreen() int {
 	fmt.Println("\n-----OPTIONS-----")
-	fmt.Println("1 - Order\n0 - Exit")
+	fmt.Println("1 - Order\n2 - Admin\n0 - Exit")
 
-	return utils.GetValidatedNumber("Enter option: ", 0, 1)
+	return utils.GetValidatedNumber("Enter option: ", 0, 2)
 }
 
 func OrderScreen() int {
@@ -142,3 +142,10 @@ func DrinkSizes() int {
 }
 
 // #endregion
+
+func AdminScreen() int {
+	fmt.Println("\n-----DRINK SIZES-----")
+	fmt.Println("1 - See all orders\n2 - Edit an order\n3 - Delete an order\n0 - Go Back")
+
+	return utils.GetValidatedNumber("Enter option: ", 0, 3)
+}

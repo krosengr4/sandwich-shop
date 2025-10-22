@@ -56,6 +56,8 @@ func mainMenuLogic(db *database.Database) {
 		switch userChoice {
 		case 1:
 			orderScreenLogic(db)
+		case 2:
+			verifyAdmin()
 		case 0:
 			ifContinue = false
 		}
@@ -479,4 +481,34 @@ func validateOrder() int {
 
 	fmt.Println("\nIs this order correct?\n1 - Yes\n2 - No")
 	return utils.GetValidatedNumber("Enter option: ", 1, 2)
+}
+
+func verifyAdmin() {
+	scanner := bufio.NewScanner(os.Stdin)
+
+	adminPassword, exists := os.LookupEnv("SQL_PASSWORD")
+	if !exists {
+		fmt.Println("Error! Could not find the password!")
+	}
+
+	for i := 0; i <= 3; i++ {
+		fmt.Println("Enter the password:")
+		scanner.Scan()
+		userPassInput := scanner.Text()
+
+		if userPassInput != adminPassword && i < 3 {
+			fmt.Println("Wrong password! Try again.")
+		} else if userPassInput != adminPassword && i == 3 {
+			fmt.Println("You are not admin! Goodbye!")
+			break
+		} else if userPassInput == adminPassword {
+			adminScreen()
+			break
+		}
+
+	}
+}
+
+func adminScreen() {
+	fmt.Println("Admin screen!")
 }

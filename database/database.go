@@ -61,6 +61,25 @@ func (d *Database) GetAllOrders() ([]*models.Order, error) {
 	return orders, nil
 }
 
+func (d *Database) GetOrderById(orderId int) (*models.Order, error) {
+	query := "SELECT order_id, customer_name, quantity_of_items, total_price, time_ordered FROM orders WHERE order_id = ?;"
+
+	row, err := d.conn.Query(query, orderId)
+	if err != nil {
+		return nil, fmt.Errorf("failed to query order: %w", err)
+	}
+	defer row.Close()
+
+	o := &models.Order{}
+
+	err = row.Scan(&o.ID, o.CustomerName, o.Quantity, o.TotalPrice, o.TimeOfOrder)
+	if err != nil {
+		return nil, fmt.Errorf("failed to scan row: %w", err)
+	}
+
+	return o, nil
+}
+
 func (d *Database) AddOrder(order *models.Order) error {
 	query := "INSERT INTO orders (customer_name, quantity_of_items, total_price, time_ordered) VALUES (?, ?, ?, ?);"
 
@@ -73,10 +92,10 @@ func (d *Database) AddOrder(order *models.Order) error {
 	return nil
 }
 
-func (d *Database) EditOrder(newOrder *models.Order) error {
+func (d *Database) EditOrder(newOrder *models.Order, orderId int) error {
 	query := "UPDATE orders SET customer_name = ?, quantity_of_items = ?, total_price = ? WHERE order_id = ?"
 
-	_, err := d.conn.Exec(query, editField, newValue, orderId
+	_, err := d.conn.Exec(query, newOrder.CustomerName, newOrder.Quantity, newOrder.TotalPrice, orderId)
 	if err != nil {
 		return fmt.Errorf("failed to update the order: %w", err)
 	}
@@ -85,4 +104,3 @@ func (d *Database) EditOrder(newOrder *models.Order) error {
 	fmt.Println("Success! The order was updated!")
 	return nil
 }
-

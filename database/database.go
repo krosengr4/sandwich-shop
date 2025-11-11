@@ -72,3 +72,17 @@ func (d *Database) AddOrder(order *models.Order) error {
 	fmt.Println("Success! The order was added to the db!")
 	return nil
 }
+
+func (d *Database) EditOrder(newOrder *models.Order) error {
+	query := "UPDATE orders SET customer_name = ?, quantity_of_items = ?, total_price = ? WHERE order_id = ?"
+
+	_, err := d.conn.Exec(query, editField, newValue, orderId
+	if err != nil {
+		return fmt.Errorf("failed to update the order: %w", err)
+	}
+
+	newOrder.PrintData()
+	fmt.Println("Success! The order was updated!")
+	return nil
+}
+

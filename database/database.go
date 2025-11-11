@@ -46,7 +46,7 @@ func (d *Database) GetAllOrders() ([]*models.Order, error) {
 	for rows.Next() {
 		var order models.Order
 
-		err := rows.Scan(&order.ID, order.CustomerName, order.Quantity, order.TotalPrice, order.TotalPrice, order.TimeOfOrder)
+		err := rows.Scan(&order.ID, &order.CustomerName, &order.Quantity, &order.TotalPrice, &order.TimeOfOrder)
 		if err != nil {
 			return nil, fmt.Errorf("failed to scan order: %w", err)
 		}

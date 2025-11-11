@@ -3,8 +3,15 @@ package models
 import (
 	"fmt"
 	"sandwich-shop/utils"
+	"strings"
 	"time"
 )
+
+// Pricer defines an interface for any item that has a price
+type MenuItem interface {
+	GetPrice() float32
+	PrintData()
+}
 
 type Order struct {
 	ID           int
@@ -15,10 +22,14 @@ type Order struct {
 	TimeOfOrder  time.Time
 }
 
-// Pricer defines an interface for any item that has a price
-type MenuItem interface {
-	GetPrice() float32
-	PrintData()
+func (o Order) PrintData() {
+	fmt.Println("\n" + strings.Repeat("*", 50))
+	fmt.Printf("\n-----ORDER FOR %s-----\n", strings.ToUpper(o.CustomerName))
+	fmt.Println("Order ID:", o.ID)
+	fmt.Println("Quantity Ordered:", o.Quantity)
+	fmt.Print("Time of Order:", o.TimeOfOrder)
+	fmt.Printf("Total Price: $%.2f\n", o.TotalPrice)
+	fmt.Println("\n" + strings.Repeat("*", 50))
 }
 
 type Sandwich struct {

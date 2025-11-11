@@ -149,3 +149,11 @@ func AdminScreen() int {
 
 	return utils.GetValidatedNumber("Enter option: ", 0, 3)
 }
+
+func EditOrderScreen() int {
+	fmt.Println("\n-----ENTER WHAT YOU WANT TO EDIT-----")
+	// todo: Create option for adding, editing, or deleting an item that was ordered
+	fmt.Println("1 - Edit Customer Name\n2 - Edit Quantity of Items Ordered\n3 - Edit Total Price")
+
+	return utils.GetValidatedNumber("Enter Option: ", 1, 3)
+}

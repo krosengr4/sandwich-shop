@@ -519,8 +519,10 @@ func adminScreen(db *database.Database) {
 		case 1:
 			viewAllOrders(db)
 		case 2:
-			editOrder(db)
+			viewOrderByID(db)
 		case 3:
+			editOrder(db)
+		case 4:
 			deleteOrder(db)
 		case 0:
 			ifContinue = false
@@ -543,6 +545,10 @@ func viewAllOrders(db *database.Database) {
 		order.PrintData()
 	}
 
+}
+
+func viewOrderByID(db *database.Database) {
+	fmt.Println("View by ID")
 }
 
 func editOrder(db *database.Database) {

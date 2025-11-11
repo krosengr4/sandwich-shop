@@ -57,7 +57,7 @@ func mainMenuLogic(db *database.Database) {
 		case 1:
 			orderScreenLogic(db)
 		case 2:
-			verifyAdmin()
+			verifyAdmin(db)
 		case 0:
 			ifContinue = false
 		}
@@ -483,7 +483,7 @@ func validateOrder() int {
 	return utils.GetValidatedNumber("Enter option: ", 1, 2)
 }
 
-func verifyAdmin() {
+func verifyAdmin(db *database.Database) {
 	scanner := bufio.NewScanner(os.Stdin)
 
 	adminPassword, exists := os.LookupEnv("SQL_PASSWORD")
@@ -502,14 +502,14 @@ func verifyAdmin() {
 			fmt.Println("You are not admin! Goodbye!")
 			break
 		} else if userPassInput == adminPassword {
-			adminScreen()
+			adminScreen(db)
 			break
 		}
 
 	}
 }
 
-func adminScreen() {
+func adminScreen(db *database.Database) {
 	ifContinue := true
 
 	for ifContinue {
@@ -517,34 +517,41 @@ func adminScreen() {
 
 		switch adminChoice {
 		case 1:
-			viewAllOrders()
+			viewAllOrders(db)
 		case 2:
-			editOrder()
+			editOrder(db)
 		case 3:
-			deleteOrder()
+			deleteOrder(db)
 		case 0:
 			ifContinue = false
 		}
 	}
+}
 
+func viewAllOrders(db *database.Database) {
 
+	allOrders, err := db.GetAllOrders()
+	if err != nil {
+		log.Fatalf("Error! Could not get all orders: %v", err)
+	}
 
+	if len(allOrders) == 0 {
+		fmt.Println("There are no orders to display...")
+	}
+
+	for _, order := range allOrders {
+		order.PrintData()
+	}
 
 }
 
-func viewAllOrders() {
-
-	fmt.Println("view all orders")
-
-}
-
-func editOrder() {
+func editOrder(db *database.Database) {
 
 	fmt.Println("Edit an order")
 
 }
 
-func deleteOrder() {
+func deleteOrder(db *database.Database) {
 
 	fmt.Println("Delete an order")
 
